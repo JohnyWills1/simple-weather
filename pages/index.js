@@ -52,7 +52,7 @@ export default function Home() {
 			</Head>
 
 			<main className={styles.main}>
-				<Stack mb='50px' isInline>
+				<Stack position='relative' top='3%' isInline>
 					<MotionBox
 						whileHover={{ scale: 1.2, y: "-20px" }}
 						p='10px'
@@ -77,7 +77,7 @@ export default function Home() {
 					<MotionBox
 						whileHover={{ scale: 1.2, y: "-20px" }}
 						p='10px'
-						background='linear-gradient(45deg,#e76f51,#f4a261)'
+						background='linear-gradient(45deg,#e76f51,#e9c46a)'
 						borderRadius='9999px'>
 						<Icon as={TiWeatherStormy} color='white' w='40px' h='40px' />
 					</MotionBox>
@@ -90,7 +90,15 @@ export default function Home() {
 					</MotionBox>
 				</Stack>
 
-				<Box bgColor='#272C35' p={5} borderRadius='20px' zIndex='1' color='white' overflow='hidden'>
+				<Box
+					background='rgba(255,255,255,0.4)'
+					backdropFilter='blur(10px)'
+					border='1px solid rgba(255,255,255,0.2)'
+					p={5}
+					borderRadius='20px'
+					zIndex='1'
+					color='white'
+					overflow='hidden'>
 					<Heading>Simple Weather</Heading>
 					<Flex align='center' flexDirection='column'>
 						<Stack isInline>
