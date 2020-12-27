@@ -53,19 +53,39 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<Stack mb='50px' isInline>
-					<MotionBox whileHover={{ scale: 1.2, y: "-20px" }} p='10px' backgroundColor='#44464A' borderRadius='9999px'>
+					<MotionBox
+						whileHover={{ scale: 1.2, y: "-20px" }}
+						p='10px'
+						background='linear-gradient(45deg,#f48c06,#ffba08)'
+						borderRadius='9999px'>
 						<Icon as={TiWeatherSunny} color='white' w='40px' h='40px' />
 					</MotionBox>
-					<MotionBox whileHover={{ scale: 1.2, y: "-20px" }} p='10px' backgroundColor='#44464A' borderRadius='9999px'>
+					<MotionBox
+						whileHover={{ scale: 1.2, y: "-20px" }}
+						p='10px'
+						background='linear-gradient(45deg,#4361ee,#4cc9f0)'
+						borderRadius='9999px'>
 						<Icon as={TiWeatherDownpour} color='white' w='40px' h='40px' />
 					</MotionBox>
-					<MotionBox whileHover={{ scale: 1.2, y: "-20px" }} p='10px' backgroundColor='#44464A' borderRadius='9999px'>
+					<MotionBox
+						whileHover={{ scale: 1.2, y: "-20px" }}
+						p='10px'
+						background='linear-gradient(45deg,#48cae4,#bde0fe)'
+						borderRadius='9999px'>
 						<Icon as={TiWeatherSnow} color='white' w='40px' h='40px' />
 					</MotionBox>
-					<MotionBox whileHover={{ scale: 1.2, y: "-20px" }} p='10px' backgroundColor='#44464A' borderRadius='9999px'>
+					<MotionBox
+						whileHover={{ scale: 1.2, y: "-20px" }}
+						p='10px'
+						background='linear-gradient(45deg,#e76f51,#f4a261)'
+						borderRadius='9999px'>
 						<Icon as={TiWeatherStormy} color='white' w='40px' h='40px' />
 					</MotionBox>
-					<MotionBox whileHover={{ scale: 1.2, y: "-20px" }} p='10px' backgroundColor='#44464A' borderRadius='9999px'>
+					<MotionBox
+						whileHover={{ scale: 1.2, y: "-20px" }}
+						p='10px'
+						background='linear-gradient(45deg,#3f37c9,#7209b7)'
+						borderRadius='9999px'>
 						<Icon as={TiWeatherWindy} color='white' w='40px' h='40px' />
 					</MotionBox>
 				</Stack>
@@ -74,10 +94,16 @@ export default function Home() {
 					<Heading>Simple Weather</Heading>
 					<Flex align='center' flexDirection='column'>
 						<Stack isInline>
-							<Button size='xs' backgroundColor='#44464A' onClick={() => setUOM("imperial")}>
+							<Button
+								size='xs'
+								backgroundColor={uom === "imperial" ? "#3182ce" : "#44464A"}
+								onClick={() => setUOM("imperial")}>
 								°F
 							</Button>
-							<Button size='xs' backgroundColor='#44464A' onClick={() => setUOM("metric")}>
+							<Button
+								size='xs'
+								backgroundColor={uom === "metric" ? "#3182ce" : "#44464A"}
+								onClick={() => setUOM("metric")}>
 								°C
 							</Button>
 						</Stack>
