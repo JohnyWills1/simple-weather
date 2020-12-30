@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap");
+
 .container {
 	min-height: 100vh;
 	padding: 0 0.5rem;
@@ -5,7 +7,8 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: #20252c;
+	background: #272c35;
+	font-family: "Montserrat", sans-serif;
 }
 
 .main {
@@ -119,4 +122,14 @@
 		width: 100%;
 		flex-direction: column;
 	}
+}
+
+.glassMorph {
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.4);
+}
+
+.text_shadow {
+	text-shadow: black 0px 0px 1px;
 }
