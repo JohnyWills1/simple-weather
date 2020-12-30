@@ -12,6 +12,8 @@ import {
 	InputGroup,
 	InputRightElement,
 	IconButton,
+	Spinner,
+	Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -49,6 +51,7 @@ export default function Home() {
 	};
 
 	useEffect(() => {
+		setData(null);
 		getWeather();
 		// setInterval(getWeather, 60000);
 	}, [uom, finalDest]);
@@ -56,9 +59,7 @@ export default function Home() {
 	const getImage = async (searchTerm) => {
 		try {
 			const response = await axios.get(
-				"https://cors-anywhere.herokuapp.com/https://api.unsplash.com/search/photos?query=" +
-					searchTerm +
-					"&orientation=landscape&order_by=popular",
+				"https://api.unsplash.com/search/photos?query=" + searchTerm + "&orientation=landscape&order_by=popular",
 				{
 					headers: {
 						Authorization: "Client-ID " + process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
@@ -312,7 +313,13 @@ export default function Home() {
 						</Box>
 					) : (
 						<Flex mt={8} color='white' align='center'>
-							Loading Data
+							<Spinner
+								thickness='4px'
+								speed='0.65s'
+								emptyColor='rgba(255, 255, 255, 0.4)'
+								color='blue.500'
+								size='xl'
+							/>
 						</Flex>
 					)}
 				</Flex>
