@@ -28,37 +28,37 @@ export default function Home() {
 	const [bgImage, setBgImage] = useState(null);
 	const [lang, setLang] = useState("English");
 
-	useEffect(() => {
-		const getWeather = async () => {
-			try {
-				const response = await axios.get(
-					"https://api.openweathermap.org/data/2.5/weather?q=" +
-						finalDest +
-						"&appid=" +
-						process.env.NEXT_PUBLIC_WEATHER_API_KEY +
-						"&units=" +
-						uom
-				);
-				setData(response.data);
-				setError(null);
+	const getWeather = async () => {
+		try {
+			const response = await axios.get(
+				"https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=" +
+					finalDest +
+					"&appid=" +
+					process.env.NEXT_PUBLIC_WEATHER_API_KEY +
+					"&units=" +
+					uom
+			);
+			setData(response.data);
+			setError(null);
+			// Get unsplash image
+			const searchTerm = response.data.name;
+			getImage(searchTerm);
+		} catch (error) {
+			setError("An error has occurred please try a different search term!");
+		}
+	};
 
-				// Get unsplash image
-				const searchTerm = response.data.name;
-				getImage(searchTerm);
-			} catch (error) {
-				setError("An error has occurred please try a different search term!");
-			}
-		};
-		setInterval(() => {
-			console.log("running function");
-			getWeather();
-		}, 60000);
+	useEffect(() => {
+		getWeather();
+		setInterval(getWeather, 60000);
 	}, [uom, finalDest]);
 
 	const getImage = async (searchTerm) => {
 		try {
 			const response = await axios.get(
-				"https://api.unsplash.com/search/photos?query=" + searchTerm + "&orientation=landscape&order_by=popular",
+				"https://cors-anywhere.herokuapp.com/https://api.unsplash.com/search/photos?query=" +
+					searchTerm +
+					"&orientation=landscape&order_by=popular",
 				{
 					headers: {
 						Authorization: "Client-ID " + process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
