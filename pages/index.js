@@ -32,7 +32,7 @@ export default function Home() {
 		const getWeather = async () => {
 			try {
 				const response = await axios.get(
-					"http://api.openweathermap.org/data/2.5/weather?q=" +
+					"https://api.openweathermap.org/data/2.5/weather?q=" +
 						finalDest +
 						"&appid=" +
 						process.env.NEXT_PUBLIC_WEATHER_API_KEY +
