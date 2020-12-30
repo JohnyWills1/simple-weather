@@ -50,7 +50,7 @@ export default function Home() {
 
 	useEffect(() => {
 		getWeather();
-		setInterval(getWeather, 60000);
+		// setInterval(getWeather, 60000);
 	}, [uom, finalDest]);
 
 	const getImage = async (searchTerm) => {
