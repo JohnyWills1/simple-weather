@@ -20,6 +20,7 @@ import axios from "axios";
 import { SearchIcon } from "@chakra-ui/icons";
 import { TiWeatherDownpour, TiWeatherSnow, TiWeatherStormy, TiWeatherWindy, TiWeatherSunny } from "react-icons/ti";
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 
 export default function Home() {
 	const [data, setData] = useState(null);
@@ -66,11 +67,18 @@ export default function Home() {
 					},
 				}
 			);
-			setBgImage(response.data.results[0]);
+			const randNum = Math.floor(Math.random() * 3);
+			setBgImage(response.data.results[randNum]);
 		} catch (error) {
 			console.error(error);
 		}
 	};
+
+	const onSubmit = ({ searchTermReq }) => {
+		setFinalDest(searchTermReq);
+	};
+
+	const { register, handleSubmit, errors } = useForm();
 
 	const MotionBox = motion.custom(Box);
 
@@ -81,47 +89,52 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<main className={styles.main}>
-				<Stack position='relative' top='-5%' isInline>
-					<MotionBox
-						whileHover={{ scale: 1.2, y: "-25px" }}
-						p='10px'
-						background='linear-gradient(45deg,#f48c06,#ffba08)'
-						borderRadius='9999px'>
-						<Icon as={TiWeatherSunny} color='white' w='40px' h='40px' />
-					</MotionBox>
-					<MotionBox
-						whileHover={{ scale: 1.2, y: "-25px" }}
-						p='10px'
-						background='linear-gradient(45deg,#4361ee,#4cc9f0)'
-						borderRadius='9999px'>
-						<Icon as={TiWeatherDownpour} color='white' w='40px' h='40px' />
-					</MotionBox>
-					<MotionBox
-						whileHover={{ scale: 1.2, y: "-25px" }}
-						p='10px'
-						background='linear-gradient(45deg,#48cae4,#bde0fe)'
-						borderRadius='9999px'>
-						<Icon as={TiWeatherSnow} color='white' w='40px' h='40px' />
-					</MotionBox>
-					<MotionBox
-						whileHover={{ scale: 1.2, y: "-25px" }}
-						p='10px'
-						background='linear-gradient(45deg,#e76f51,#e9c46a)'
-						borderRadius='9999px'>
-						<Icon as={TiWeatherStormy} color='white' w='40px' h='40px' />
-					</MotionBox>
-					<MotionBox
-						whileHover={{ scale: 1.2, y: "-25px" }}
-						p='10px'
-						background='linear-gradient(45deg,#3f37c9,#7209b7)'
-						borderRadius='9999px'>
-						<Icon as={TiWeatherWindy} color='white' w='40px' h='40px' />
-					</MotionBox>
-				</Stack>
-
-				<Flex position='absolute' flexDirection='column' justify='center' align='center'>
-					<Box className={styles.glassMorph} p={5} borderRadius='20px' zIndex='1' color='white' w='450px'>
+			<Flex
+				className={styles.main}
+				flexDirection='column'
+				align='center'
+				background='#272c35'
+				fontFamily='Montserrat, sans-serif'
+				minH={["150vh", "100vh"]}>
+				<Flex position='relative' flexDirection='column' justify='center' align='center'>
+					<Stack position='absolute' top={["-3%", "-4%", "-5%"]} spacing={["-3px", "10px"]} isInline>
+						<MotionBox
+							whileHover={{ scale: 1.2, y: "-25px" }}
+							p='10px'
+							background='linear-gradient(45deg,#f48c06,#ffba08)'
+							borderRadius='9999px'>
+							<Icon as={TiWeatherSunny} color='white' w='40px' h='40px' />
+						</MotionBox>
+						<MotionBox
+							whileHover={{ scale: 1.2, y: "-25px" }}
+							p='10px'
+							background='linear-gradient(45deg,#4361ee,#4cc9f0)'
+							borderRadius='9999px'>
+							<Icon as={TiWeatherDownpour} color='white' w='40px' h='40px' />
+						</MotionBox>
+						<MotionBox
+							whileHover={{ scale: 1.2, y: "-25px" }}
+							p='10px'
+							background='linear-gradient(45deg,#48cae4,#bde0fe)'
+							borderRadius='9999px'>
+							<Icon as={TiWeatherSnow} color='white' w='40px' h='40px' />
+						</MotionBox>
+						<MotionBox
+							whileHover={{ scale: 1.2, y: "-25px" }}
+							p='10px'
+							background='linear-gradient(45deg,#e76f51,#e9c46a)'
+							borderRadius='9999px'>
+							<Icon as={TiWeatherStormy} color='white' w='40px' h='40px' />
+						</MotionBox>
+						<MotionBox
+							whileHover={{ scale: 1.2, y: "-25px" }}
+							p='10px'
+							background='linear-gradient(45deg,#3f37c9,#7209b7)'
+							borderRadius='9999px'>
+							<Icon as={TiWeatherWindy} color='white' w='40px' h='40px' />
+						</MotionBox>
+					</Stack>
+					<Box className={styles.glassMorph} p={5} borderRadius='20px' zIndex='1' color='white' w={["300px", "450px"]}>
 						<Flex align='center' flexDirection='column'>
 							<Stack justify='space-evenly' isInline>
 								<Button
@@ -154,18 +167,28 @@ export default function Home() {
 								</Button>
 							</Stack>
 
-							<InputGroup mt='10px' size='md'>
-								<Input placeholder='Enter an area name!' onChange={(e) => setDest(e.target.value)} />
-								<IconButton
-									colorScheme='blue'
-									h='40px'
-									ml='5px'
-									rounded='full'
-									icon={<SearchIcon />}
-									onClick={() => setFinalDest(dest)}
-								/>
-							</InputGroup>
-							{error && <p color='red'>{error}</p>}
+							<form onSubmit={handleSubmit(onSubmit)}>
+								<InputGroup mt='10px' size='md'>
+									<Input
+										name='searchTermReq'
+										placeholder='Enter an area name!'
+										ref={register({ required: true })}
+										w={["200px", "250px"]}
+										mr='10px'
+										onChange={(e) => setDest(e.target.value)}
+									/>
+									<IconButton
+										variant='outline'
+										colorScheme='gray'
+										h='40px'
+										ml='5px'
+										rounded='full'
+										icon={<SearchIcon />}
+										type='submit'
+									/>
+								</InputGroup>
+								{errors.searchTermReq && <p color='red'>Please enter a search term!</p>}
+							</form>
 						</Flex>
 					</Box>
 
@@ -176,10 +199,10 @@ export default function Home() {
 							backgroundRepeat='no-repeat'
 							backgroundSize='cover'
 							p={5}
-							w={bgImage && bgImage.width}
+							w={["315px", "450px", "700px", bgImage && bgImage.width]}
 							maxW='1000px'
-							h={bgImage && bgImage.height}
-							maxH='590px'
+							h={["1100px", "950px", "800px", bgImage && bgImage.height]}
+							maxH={["1100px", "950px", "700px", "590px"]}
 							mt='50px'
 							borderRadius='20px'>
 							<Heading
@@ -194,7 +217,7 @@ export default function Home() {
 								{data.name}
 							</Heading>
 
-							<Grid templateColumns='repeat(3, 1fr)' mt='20px' gap={6}>
+							<Grid templateColumns={["repeat(1,1fr)", "repeat(2,1fr)", "repeat(3, 1fr)"]} mt='20px' gap={[2, 6]}>
 								<MotionBox
 									className={styles.glassMorph}
 									whileHover={{ scale: 1.08 }}
@@ -205,7 +228,12 @@ export default function Home() {
 										<Heading size='md' fontFamily='Montserrat, sans-serif' opacity='0.8'>
 											{lang === "Japanese" ? "温度" : "Temperature"}
 										</Heading>
-										<Box mt='10px' fontSize='50px' fontWeight='900' letterSpacing='2px'>
+										<Box
+											mt='10px'
+											fontSize={["30px", "35px", "45px", "50px"]}
+											fontWeight='900'
+											textAlign='center'
+											letterSpacing='2px'>
 											{data.main.temp}°
 										</Box>
 									</Flex>
@@ -221,7 +249,12 @@ export default function Home() {
 										<Heading size='md' fontFamily='Montserrat, sans-serif' opacity='0.8'>
 											{lang === "Japanese" ? "最低" : "Min Temperature"}
 										</Heading>
-										<Box mt='10px' fontSize='50px' fontWeight='900' letterSpacing='2px'>
+										<Box
+											mt='10px'
+											fontSize={["30px", "35px", "45px", "50px"]}
+											fontWeight='900'
+											textAlign='center'
+											letterSpacing='2px'>
 											{data.main.temp_min}°
 										</Box>
 									</Flex>
@@ -237,7 +270,12 @@ export default function Home() {
 										<Heading size='md' fontFamily='Montserrat, sans-serif' opacity='0.8'>
 											{lang === "Japanese" ? "最高" : "Max Temperature"}
 										</Heading>
-										<Box mt='10px' fontSize='50px' fontWeight='900' letterSpacing='2px'>
+										<Box
+											mt='10px'
+											fontSize={["30px", "35px", "45px", "50px"]}
+											fontWeight='900'
+											textAlign='center'
+											letterSpacing='2px'>
 											{data.main.temp_max}°
 										</Box>
 									</Flex>
@@ -253,7 +291,12 @@ export default function Home() {
 										<Heading size='md' fontFamily='Montserrat, sans-serif' opacity='0.8'>
 											{lang === "Japanese" ? "温度感覚" : "Feels Like"}
 										</Heading>
-										<Box mt='10px' fontSize='50px' fontWeight='900' letterSpacing='2px'>
+										<Box
+											mt='10px'
+											fontSize={["30px", "35px", "45px", "50px"]}
+											fontWeight='900'
+											textAlign='center'
+											letterSpacing='2px'>
 											{data.main.feels_like}°
 										</Box>
 									</Flex>
@@ -269,7 +312,12 @@ export default function Home() {
 										<Heading size='md' fontFamily='Montserrat, sans-serif' opacity='0.8'>
 											{lang === "Japanese" ? "湿度" : "Humidity"}
 										</Heading>
-										<Box mt='10px' fontSize='50px' fontWeight='900' letterSpacing='2px'>
+										<Box
+											mt='10px'
+											fontSize={["30px", "35px", "45px", "50px"]}
+											fontWeight='900'
+											textAlign='center'
+											letterSpacing='2px'>
 											{data.main.humidity}°
 										</Box>
 									</Flex>
@@ -285,7 +333,12 @@ export default function Home() {
 										<Heading size='md' fontFamily='Montserrat, sans-serif' opacity='0.8'>
 											{lang === "Japanese" ? "気圧" : "Pressure"}
 										</Heading>
-										<Box mt='10px' fontSize='50px' fontWeight='900' letterSpacing='2px'>
+										<Box
+											mt='10px'
+											fontSize={["30px", "35px", "45px", "50px"]}
+											fontWeight='900'
+											textAlign='center'
+											letterSpacing='2px'>
 											{data.main.pressure} hPa
 										</Box>
 									</Flex>
@@ -323,7 +376,7 @@ export default function Home() {
 						</Flex>
 					)}
 				</Flex>
-			</main>
+			</Flex>
 		</div>
 	);
 }
