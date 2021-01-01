@@ -4,7 +4,7 @@ A simple weather app which display a range of current weather information.
 
 ## Live Site
 
-[enter live site url here]
+https://simple-weather-eight.vercel.app/
 
 ## Screenshots
 
