@@ -214,7 +214,7 @@ export default function Home() {
 								textAlign='center'
 								p='10px'
 								w='fit-content'>
-								{data.name}
+								{data.name}, {data.sys.country}
 							</Heading>
 
 							<Grid templateColumns={["repeat(1,1fr)", "repeat(2,1fr)", "repeat(3, 1fr)"]} mt='20px' gap={[2, 6]}>
